@@ -1,4 +1,5 @@
-from flask import Flask;
+import os
+from flask import Flask, send_from_directory;
 from dotenv import load_dotenv;
 from firestore import add_data
 from flask_swagger_ui import get_swaggerui_blueprint
@@ -24,3 +25,7 @@ app.register_blueprint(swaggerui_blueprint)
 def index_page():
   add_data("auth","id",{ "name": "Bayu", "email": "bayu@gmail.com", "token": "asjdfk" })
   return "hallo"
+
+@app.route('/swagger/v1.json')
+def swagger_spec():
+    return send_from_directory(os.path.dirname(__file__), 'swagger/v1.json')
